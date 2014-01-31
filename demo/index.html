@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Plant Explorer in Neo4j  -  Neo4j GraphGist</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+
+    <!-- Neo4g gist -->
+    <script src="js/console.js"></script>
+</head>
+
+<body>
+
+<div class="row">
+    <div id="content" class="span10 offset1"><div class="sect1">
+<h2 id="_plant_explorer_in_neo4j" style="cursor: pointer;">Plant Explorer in Neo4j</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal is to explore how grqphgist can be used to feed data to d3js visualisations. Vegetable data have been obtained through the scrapping of various websites. They have been normalized to bring to a common scale data on different measurement units or dates from different hemispheres. Then they have been reduced, to binify any continuous data.</p>
+</div>
+
+<div class="paragraph">
+<p>To avoid to overtax the console, only one plant is loaded in this example ("anise").</p>
+</div>
+
+<div class="sect2">
+<h3 id="_embedded_javascript">Embedded Javascript</h3>
+<div class="paragraph">
+<p>Click any of the buttons and a call will be made to the Neo4j console through some javascript embedded within the gist. The json data returned by the script will cause the visualisation to refresh.</p>
+</div>
+
+<div class="paragraph">
+<p>The visualisation is in the form of a density map. For instance, for soil ph, the values 6,7,8 are the ph values that the plant tolerates. The background color capture a custom color scale (mildly acidic in orange, neutral in yellow, alkaline in green). The bar under the number capture the relative frequency of that observation (2 observations for ph 6, 3 for ph 7 and 1 for ph 8).</p>
+</div>
+
+<div class="paragraph">
+<p>Sowing months have been normalized to the Southern Hemisphere (as I live in NZ).</p>
+</div>
+
+<div id="traitDensity"></div>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="RequirePreloaded.js"></script>
+<script src="CypherConsole.js"></script>
+<script src="PlantProvider_cypher.js"></script>
+<script src="ClassUtil.js"></script>
+<script src="DensityMap.js"></script>
+<script src="TraitDensity.js"></script>
+<script>
+
+requirejs(["traitdensity"], function(TraitDensity) {
+    var traits = TraitDensity.instance();
+    traits.traits([
+        {id: "/soil/ph", label: "Soil PH", type: "measure", colors:  "0:#CC2222,5:#FF6600,6.0:#FFDD00,7.0:#336600"},
+        {id: "/physiology/size/height", label: "Plant Height", type: "measure", colors: "-10:#003366,30:#336600,40:#FF6600,50:#CC2222"},
+        {id: "/propagate/cal", label: "Sowing Months", type: "tag", render: "months"}
+     ]);
+    traits.mount(document.querySelector("#traitDensity"))
+    traits.actuate();
+})
+
+</script>
+<script>
+
+
+</script>
+
+</div>
+
+<div class="sect2">
+<h3 id="_credits">Credits</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://neo4j.org/">Neo4j</a> and <a href="http://gist.neo4j.org/">graphgist</a></p>
+</li>
+<li>
+<p><a href="http://d3js.org/">D3js</a></p>
+</li>
+</ul>
+</div>
+
+<span id="metadata" author="{author}" version="{neo4j-version}" twitter="{twitter}" tags="{tags}"></span>
+
+</div>
+
+</div>
+</div>
+
+</footer>
+
