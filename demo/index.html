@@ -6,7 +6,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js" charset="utf-8"></script>
 
     <!-- Bootstrap -->
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -50,7 +50,6 @@
 
 <div id="traitDensity"></div>
 
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="RequirePreloaded.js"></script>
 <script src="CypherConsole.js"></script>
 <script src="PlantProvider_cypher.js"></script>
@@ -58,6 +57,8 @@
 <script src="DensityMap.js"></script>
 <script src="TraitDensity.js"></script>
 <script>
+
+
 
 requirejs(["traitdensity"], function(TraitDensity) {
     var traits = TraitDensity.instance();
